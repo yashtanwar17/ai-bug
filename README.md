@@ -11,6 +11,7 @@ A minimal Python Flask app that uses **SambaNova GPT API** to analyze code and f
 git clone https://github.com/yashtanwar17/ai-bug
 cd ai-bug
 pip install -r requirements.txt
+#change API key
 python app.py
 ```
 Then open your browser at: `http://localhost:5000` 
