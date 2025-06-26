@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Bug Analyzer</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Bug</h1>
+        <form id="analyze-form">
+            <textarea name="code" rows="6" placeholder="Paste Python code here..."></textarea>
+            <button type="submit">Analyze</button>
+        </form>
+        <div id="loading" style="display:none;">⏳ Analyzing...</div>
+        <div id="result-box">
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById("analyze-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const loading = document.getElementById("loading");
+        const resultBox = document.getElementById("result-box");
+        const result = document.getElementById("result");
+
+        loading.style.display = "block";
+        resultBox.style.display = "none";
+
+        const response = await fetch("/analyze", {
+            method: "POST",
+            body: formData
+        });
+        const data = await response.json();
+
+        loading.style.display = "none";
+        resultBox.style.display = "block";
+        result.innerHTML = marked.parse(data.result);
+    });
+    </script>
+</body>
+</html>
